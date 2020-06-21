@@ -3,25 +3,37 @@ FROM ubuntu:20.04
 ENV DESTDIR=/tmp/install
 ARG PYTHON_VERSION=3.7.7
 
-RUN apt update && DEBIAN_FRONTEND="noninteractive" apt -y install \
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
     build-essential checkinstall libreadline-gplv2-dev libncursesw5-dev \
-    libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev
+    libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev \
+    libgdbm-dev liblzma-dev wget binutils
 
-ADD https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz /tmp/python.tgz
+RUN wget -O /tmp/python.tgz https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz
 
 WORKDIR /tmp
 RUN tar xzvf python.tgz
 
 WORKDIR /tmp/Python-$PYTHON_VERSION
-RUN ./configure --enable-optimizations
+RUN ./configure --enable-optimizations --enable-loadable-sqlite-extensions \
+                --enable-option-checking=fatal --enable-shared \
+                --with-system-expat --with-system-ffi
+RUN make -j "$(nproc)"
 RUN make install
 
 WORKDIR /tmp/install/usr/local/bin
 RUN ln -s python3 python && \
     ln -s python3-config python-config && \
     ln -s pip3 pip && \
-    ln -s idle3 idle
+    rm -f 2to3 2to3-3.8 easy_install-3.8 idle3 idle3.8 && \
+    find /usr/local/ -type f -name '*.pyc' -o -name '*.pyo' -delete
+RUN find . -type f | xargs strip --strip-all | true
 
 FROM ubuntu:20.04
-RUN apt update && apt -y install libssl-dev && apt clean
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libssl-dev libexpat1 liblzma5 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 COPY --from=0 /tmp/install /
+RUN ldconfig  
+
+CMD ["/usr/local/bin/python"]
