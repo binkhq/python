@@ -30,7 +30,7 @@ RUN find . -type f | xargs strip --strip-all | true
 
 FROM ubuntu:20.04
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libssl-dev libexpat1 liblzma5 && \
+    apt-get install -y --no-install-recommends libssl-dev libexpat1 liblzma5 libsqlite3-0 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 COPY --from=0 /tmp/install /
