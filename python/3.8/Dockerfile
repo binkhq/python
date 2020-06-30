@@ -24,13 +24,15 @@ WORKDIR /tmp/install/usr/local/bin
 RUN ln -s python3 python && \
     ln -s python3-config python-config && \
     ln -s pip3 pip && \
-    rm -f 2to3 2to3-3.8 easy_install-3.8 idle3 idle3.8 && \
+    rm -fv 2to3 2to3-3.? easy_install-3.? idle3 idle3.? && \
     find /usr/local/ -type f -name '*.pyc' -o -name '*.pyo' -delete
+RUN rm -rfv /tmp/install/usr/local/lib/python3.?/test
 RUN find . -type f | xargs strip --strip-all | true
 
 FROM ubuntu:20.04
+ENV TZ UTC
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libssl-dev libexpat1 liblzma5 libsqlite3-0 && \
+    apt-get install -y --no-install-recommends libssl-dev libexpat1 liblzma5 libsqlite3-0 ca-certificates && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 COPY --from=0 /tmp/install /
