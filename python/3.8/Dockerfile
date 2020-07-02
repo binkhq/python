@@ -4,7 +4,7 @@ ENV DESTDIR=/tmp/install
 ARG PYTHON_VERSION=3.8.3
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
-    build-essential checkinstall libreadline-gplv2-dev libncursesw5-dev \
+    build-essential checkinstall libreadline-dev libncursesw5-dev \
     libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev \
     libgdbm-dev liblzma-dev wget binutils
 
@@ -32,7 +32,8 @@ RUN find . -type f | xargs strip --strip-all | true
 FROM ubuntu:20.04
 ENV TZ UTC
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libssl-dev libexpat1 liblzma5 libsqlite3-0 ca-certificates && \
+    apt-get install -y --no-install-recommends \
+        libssl-dev libexpat1 liblzma5 libsqlite3-0 ca-certificates libreadline8 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 COPY --from=0 /tmp/install /
