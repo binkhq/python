@@ -8,7 +8,7 @@ ENV RUSTUP_HOME=/usr/local/rustup \
 ARG RUST_VERSION=1.44.1
 
 RUN apt-get update && \
-    apt-get -y install wget && \
+    apt-get -y install wget gcc libssl-dev pkg-config && \
     wget "https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init" && \
     chmod +x rustup-init && \
     ./rustup-init -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION && \
