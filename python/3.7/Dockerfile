@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 ENV DESTDIR=/tmp/install
-ARG PYTHON_VERSION=3.7.8
+ARG PYTHON_VERSION=3.7.9
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
     build-essential checkinstall libreadline-dev libncursesw5-dev \
