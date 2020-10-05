@@ -1,4 +1,4 @@
-FROM binkhq/python:3.8
+FROM binkhq/python:3.9
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
