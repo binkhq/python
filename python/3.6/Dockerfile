@@ -37,6 +37,6 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 COPY --from=0 /tmp/install /
-RUN ldconfig  
+RUN ldconfig
 
 CMD ["/usr/local/bin/python"]
