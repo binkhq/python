@@ -30,6 +30,6 @@ jobs:
           file: python/3.6/Dockerfile
           # platforms: linux/amd64,linux/arm64
           push: true
-            tags: |
-              binkhq/python:3.6
+          tags: |
+            binkhq/python:3.6
   release:
