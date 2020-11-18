@@ -14,6 +14,6 @@ RUN apt-get update && \
     ./rustup-init -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION && \
     rm rustup-init && \
     chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \
-    pip install --no-cache-dir maturin twine cffi && \
+    pip install --no-cache-dir setuptools-rust maturin twine cffi && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
