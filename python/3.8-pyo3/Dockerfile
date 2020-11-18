@@ -5,7 +5,7 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     PATH=/usr/local/cargo/bin:$PATH \
     DEBIAN_FRONTEND="noninteractive"
 
-ARG RUST_VERSION=1.44.1
+ARG RUST_VERSION=1.46.0
 
 RUN apt-get update && \
     apt-get -y install wget gcc libssl-dev pkg-config && \
@@ -14,6 +14,6 @@ RUN apt-get update && \
     ./rustup-init -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION && \
     rm rustup-init && \
     chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \
-    pip install --no-cache-dir maturin twine cffi && \
+    pip install --no-cache-dir setuptools-rust maturin twine cffi && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
