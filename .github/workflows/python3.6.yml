@@ -32,4 +32,3 @@ jobs:
           push: true
           tags: |
             binkhq/python:3.6
-  release:
