@@ -1,11 +1,11 @@
-FROM binkhq/python:3.8
+FROM ghcr.io/binkhq/python:3.8
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
     DEBIAN_FRONTEND="noninteractive"
 
-ARG RUST_VERSION=1.46.0
+ARG RUST_VERSION=1.53.0
 
 RUN apt-get update && \
     apt-get -y install wget gcc libssl-dev pkg-config && \
