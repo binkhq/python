@@ -40,7 +40,9 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 COPY --from=0 /tmp/install /
-RUN ldconfig
-RUN pip install --no-cache-dir pipenv
+RUN ldconfig && \
+    pip --no-cache-dir install pipx && \
+    PIPX_HOME=/usr/local/lib/pipx PIPX_BIN_DIR=/usr/local/bin pipx install poetry && \
+    PIPX_HOME=/usr/local/lib/pipx PIPX_BIN_DIR=/usr/local/bin pipx install pipenv
 
 CMD ["/usr/local/bin/python"]
