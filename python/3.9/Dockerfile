@@ -1,7 +1,7 @@
-FROM ubuntu:20.04
+FROM docker.io/ubuntu:20.04
 
 ENV DESTDIR=/tmp/install
-ARG PYTHON_VERSION=3.9.6
+ARG PYTHON_VERSION=3.9.7
 ARG LINKERD_AWAIT_VERSION=0.2.3
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
