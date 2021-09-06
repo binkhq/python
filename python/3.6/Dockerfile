@@ -42,7 +42,7 @@ RUN apt-get update && \
 COPY --from=0 /tmp/install /
 RUN ldconfig && \
     pip --no-cache-dir install pipx && \
-    PIPX_HOME=/usr/local/lib/pipx PIPX_BIN_DIR=/usr/local/bin pipx install poetry && \
+    PIPX_HOME=/usr/local/lib/pipx PIPX_BIN_DIR=/usr/local/bin pipx install --pip-args='--pre' poetry && \
     PIPX_HOME=/usr/local/lib/pipx PIPX_BIN_DIR=/usr/local/bin pipx install pipenv
 
 CMD ["/usr/local/bin/python"]
