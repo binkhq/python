@@ -1,7 +1,7 @@
-FROM ubuntu:20.04
+FROM docker.io/ubuntu:20.04
 
 ENV DESTDIR=/tmp/install
-ARG PYTHON_VERSION=3.6.14
+ARG PYTHON_VERSION=3.6.15
 ARG LINKERD_AWAIT_VERSION=0.2.3
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
@@ -42,7 +42,7 @@ RUN apt-get update && \
 COPY --from=0 /tmp/install /
 RUN ldconfig && \
     pip --no-cache-dir install pipx && \
-    PIPX_HOME=/usr/local/lib/pipx PIPX_BIN_DIR=/usr/local/bin pipx install poetry && \
+    PIPX_HOME=/usr/local/lib/pipx PIPX_BIN_DIR=/usr/local/bin pipx install --pip-args='--pre' poetry && \
     PIPX_HOME=/usr/local/lib/pipx PIPX_BIN_DIR=/usr/local/bin pipx install pipenv
 
 CMD ["/usr/local/bin/python"]
