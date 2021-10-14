@@ -1,4 +1,4 @@
-name: Python 3.8
+name: Python 3.10
 
 on:
   push:
@@ -16,8 +16,8 @@ jobs:
       packages: write
 
     env:
-      PYTHON_VERSION: 3.8.12
-      PYTHON_VERSION_SHORT: 3.8
+      PYTHON_VERSION: 3.10.0
+      PYTHON_VERSION_SHORT: 3.10
       RUST_VERSION: 1.55.0
 
     steps:
