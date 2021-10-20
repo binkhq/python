@@ -32,7 +32,7 @@ RUN find . -type f | xargs strip --strip-all | true
 RUN wget -O /tmp/install/usr/local/bin/linkerd-await https://github.com/linkerd/linkerd-await/releases/download/release/v${LINKERD_AWAIT_VERSION}/linkerd-await-v${LINKERD_AWAIT_VERSION}-amd64
 RUN chmod +x /tmp/install/usr/local/bin/linkerd-await
 
-FROM ubuntu:20.04
+FROM ubuntu:impish-20211015
 ENV TZ UTC
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
