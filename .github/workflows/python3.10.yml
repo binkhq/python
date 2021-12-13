@@ -16,7 +16,7 @@ jobs:
       packages: write
 
     env:
-      PYTHON_VERSION: "3.10.0"
+      PYTHON_VERSION: "3.10.1"
       PYTHON_VERSION_SHORT: "3.10"
       RUST_VERSION: "1.55.0"
 
