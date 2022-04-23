@@ -18,7 +18,7 @@ jobs:
     env:
       PYTHON_VERSION: "3.9.12"
       PYTHON_VERSION_SHORT: "3.9"
-      RUST_VERSION: "1.59.0"
+      RUST_VERSION: "1.60.0"
 
     steps:
       - name: Checkout repo

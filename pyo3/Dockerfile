@@ -1,7 +1,7 @@
 ARG PYTHON_VERSION=3.10
 FROM ghcr.io/binkhq/python:${PYTHON_VERSION}
 
-ARG RUST_VERSION=1.58.0
+ARG RUST_VERSION=1.60.0
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \

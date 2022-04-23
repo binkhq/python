@@ -1,8 +1,8 @@
-FROM docker.io/ubuntu:20.04
+FROM docker.io/ubuntu:22.04
 
 ENV DESTDIR=/tmp/install
-ARG PYTHON_VERSION=3.10.0
-ARG LINKERD_AWAIT_VERSION=0.2.4
+ARG PYTHON_VERSION=3.10.4
+ARG LINKERD_AWAIT_VERSION=0.2.6
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
     build-essential checkinstall libreadline-dev libncursesw5-dev \
@@ -32,7 +32,7 @@ RUN find . -type f | xargs strip --strip-all | true
 RUN wget -O /tmp/install/usr/local/bin/linkerd-await https://github.com/linkerd/linkerd-await/releases/download/release/v${LINKERD_AWAIT_VERSION}/linkerd-await-v${LINKERD_AWAIT_VERSION}-amd64
 RUN chmod +x /tmp/install/usr/local/bin/linkerd-await
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 ENV TZ UTC
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
