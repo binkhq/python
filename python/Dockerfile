@@ -41,6 +41,6 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 COPY --from=0 /tmp/install /
 RUN ldconfig
-RUN pip install --no-cache-dir "pipenv<2022.8"
+RUN pip install --no-cache-dir pipenv
 
 CMD ["/usr/local/bin/python"]
