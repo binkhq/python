@@ -47,7 +47,9 @@ FROM base AS pipenv
 RUN pip install --no-cache-dir pipenv
 
 FROM base AS poetry
-RUN pip install --no-cache-dir poetry poetry-dynamic-versioning
+RUN pip install --no-cache-dir poetry poetry-dynamic-versioning && \
+    apt-get update && apt-get -y install git && \
+    rm -rf /var/lib/apt/lists/*
 
 FROM base AS pyo3
 ARG RUST_VERSION=1.63.0
