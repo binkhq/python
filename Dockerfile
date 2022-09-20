@@ -47,7 +47,9 @@ FROM base AS pipenv
 RUN pip install --no-cache-dir pipenv
 
 FROM base AS poetry
-RUN pip install --no-cache-dir poetry poetry-dynamic-versioning && \
+RUN pip install --no-cache-dir poetry && \
+    poetry config virtualenvs.create false && \
+    poetry self add poetry-dynamic-versioning[plugin] && \
     apt-get update && apt-get -y install git && \
     rm -rf /var/lib/apt/lists/*
 
