@@ -1,7 +1,7 @@
 FROM docker.io/ubuntu:22.04 AS build
 
 ENV DESTDIR=/tmp/install
-ARG PYTHON_VERSION=3.10.7
+ARG PYTHON_VERSION=3.10.8
 ARG LINKERD_AWAIT_VERSION=0.2.7
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
