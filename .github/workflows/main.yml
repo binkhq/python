@@ -13,6 +13,9 @@ jobs:
       fail-fast: true
       matrix:
         include:
+          - python_version: "3.11.0"
+            python_version_short: "3.11"
+            rust_version: "1.64.0"
           - python_version: "3.10.8"
             python_version_short: "3.10"
             rust_version: "1.64.0"
