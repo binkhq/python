@@ -12,15 +12,15 @@ jobs:
       fail-fast: true
       matrix:
         include:
-          - python_version: "3.11.1"
+          - python_version: "3.11.2"
             python_version_short: "3.11"
-            rust_version: "1.66.1"
-          - python_version: "3.10.9"
+            rust_version: "1.67.1"
+          - python_version: "3.10.10"
             python_version_short: "3.10"
-            rust_version: "1.66.1"
+            rust_version: "1.67.1"
           - python_version: "3.9.16"
             python_version_short: "3.9"
-            rust_version: "1.66.1"
+            rust_version: "1.67.1"
     name: build
     runs-on: ubuntu-22.04
     permissions:
@@ -35,7 +35,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@v3
+      - uses: docker/build-push-action@v4
         with:
           push: true
           target: base
@@ -45,7 +45,7 @@ jobs:
             RUST_VERSION=${{ matrix.rust_version }}
           tags: |
             ghcr.io/binkhq/${{ github.event.repository.name }}:${{ matrix.python_version_short }}
-      - uses: docker/build-push-action@v3
+      - uses: docker/build-push-action@v4
         with:
           push: true
           target: pipenv
@@ -55,7 +55,7 @@ jobs:
             RUST_VERSION=${{ matrix.rust_version }}
           tags: |
             ghcr.io/binkhq/${{ github.event.repository.name }}:${{ matrix.python_version_short }}-pipenv
-      - uses: docker/build-push-action@v3
+      - uses: docker/build-push-action@v4
         with:
           push: true
           target: poetry
@@ -65,7 +65,7 @@ jobs:
             RUST_VERSION=${{ matrix.rust_version }}
           tags: |
             ghcr.io/binkhq/${{ github.event.repository.name }}:${{ matrix.python_version_short }}-poetry
-      - uses: docker/build-push-action@v3
+      - uses: docker/build-push-action@v4
         with:
           push: true
           target: pyo3
