@@ -54,7 +54,7 @@ RUN pip install --no-cache-dir poetry && \
     rm -rf /var/lib/apt/lists/*
 
 FROM base AS pyo3
-ARG RUST_VERSION=1.68.0
+ARG RUST_VERSION=1.68.1
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
