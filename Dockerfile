@@ -1,7 +1,7 @@
 FROM docker.io/ubuntu:22.04 AS build
 
 ENV DESTDIR=/tmp/install
-ARG PYTHON_VERSION=3.11.2
+ARG PYTHON_VERSION=3.11.3
 ARG LINKERD_AWAIT_VERSION=0.2.7
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
@@ -54,7 +54,7 @@ RUN pip install --no-cache-dir poetry && \
     rm -rf /var/lib/apt/lists/*
 
 FROM base AS pyo3
-ARG RUST_VERSION=1.68.1
+ARG RUST_VERSION=1.68.2
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
