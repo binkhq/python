@@ -18,7 +18,7 @@ RUN tar xzvf python.tgz
 WORKDIR /tmp/Python-${PYTHON_VERSION}
 RUN ./configure --enable-optimizations --enable-loadable-sqlite-extensions \
                 --enable-option-checking=fatal --enable-shared \
-                --with-system-expat --with-system-ffi
+                --with-system-expat
 RUN make -j "$(nproc)"
 RUN make install
 
