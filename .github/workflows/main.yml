@@ -12,15 +12,18 @@ jobs:
       fail-fast: true
       matrix:
         include:
-          - python_version: "3.11.5"
+          - python_version: "3.12.0"
             python_version_short: "3.11"
-            rust_version: "1.72.0"
+            rust_version: "1.72.1"
+          - python_version: "3.11.6"
+            python_version_short: "3.11"
+            rust_version: "1.72.1"
           - python_version: "3.10.13"
             python_version_short: "3.10"
-            rust_version: "1.72.0"
+            rust_version: "1.72.1"
           - python_version: "3.9.18"
             python_version_short: "3.9"
-            rust_version: "1.72.0"
+            rust_version: "1.72.1"
     name: build
     runs-on: ubuntu-22.04
     permissions:

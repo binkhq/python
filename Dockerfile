@@ -2,7 +2,7 @@ ARG image=ubuntu:22.04
 FROM docker.io/${image} AS build
 
 ENV DESTDIR=/tmp/install
-ARG PYTHON_VERSION=3.11.5
+ARG PYTHON_VERSION=3.12.0
 ARG LINKERD_AWAIT_VERSION=0.2.7
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
