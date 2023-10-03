@@ -1,5 +1,5 @@
-ARG image=ubuntu:22.04
-FROM docker.io/${image} AS build
+ARG IMAGE=debian:12-slim
+FROM docker.io/${IMAGE} AS build
 
 ENV DESTDIR=/tmp/install
 ARG PYTHON_VERSION=3.12.0
@@ -33,13 +33,14 @@ RUN find . -type f | xargs strip --strip-all | true
 RUN wget -O /tmp/install/usr/local/bin/linkerd-await https://github.com/linkerd/linkerd-await/releases/download/release/v${LINKERD_AWAIT_VERSION}/linkerd-await-v${LINKERD_AWAIT_VERSION}-amd64
 RUN chmod +x /tmp/install/usr/local/bin/linkerd-await
 
-FROM docker.io/${image} AS base
+FROM docker.io/${IMAGE} AS base
 ENV TZ UTC
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         libssl-dev libexpat1 liblzma5 libsqlite3-0 ca-certificates libreadline8 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+RUN useradd --uid 10000 bink
 COPY --from=build /tmp/install /
 RUN ldconfig
 CMD ["/usr/local/bin/python"]
@@ -55,7 +56,7 @@ RUN pip install --no-cache-dir poetry && \
     rm -rf /var/lib/apt/lists/*
 
 FROM base AS pyo3
-ARG RUST_VERSION=1.72.0
+ARG RUST_VERSION=1.72.1
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
