@@ -15,7 +15,7 @@ jobs:
           - python_version: "3.12.0"
             python_version_short: "3.12"
             rust_version: "1.72.1"
-            image: debain:12-slim
+            image: debian:12-slim
           - python_version: "3.11.6"
             python_version_short: "3.11"
             rust_version: "1.72.1"
