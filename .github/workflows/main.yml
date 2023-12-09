@@ -12,21 +12,21 @@ jobs:
       fail-fast: true
       matrix:
         include:
-          - python_version: "3.12.0"
+          - python_version: "3.12.1"
             python_version_short: "3.12"
-            rust_version: "1.72.1"
+            rust_version: "1.74.0"
             image: debian:12-slim
-          - python_version: "3.11.6"
+          - python_version: "3.11.7"
             python_version_short: "3.11"
-            rust_version: "1.72.1"
+            rust_version: "1.74.0"
             image: ubuntu:22.04
           - python_version: "3.10.13"
             python_version_short: "3.10"
-            rust_version: "1.72.1"
+            rust_version: "1.74.0"
             image: ubuntu:22.04
           - python_version: "3.9.18"
             python_version_short: "3.9"
-            rust_version: "1.72.1"
+            rust_version: "1.74.0"
             image: ubuntu:22.04
     name: build
     runs-on: ubuntu-22.04
@@ -34,15 +34,15 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: docker/setup-qemu-action@v2
-      - uses: docker/setup-buildx-action@v2
-      - uses: docker/login-action@v2
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@v4
+      - uses: docker/build-push-action@v5
         with:
           push: true
           target: base
@@ -53,7 +53,7 @@ jobs:
             IMAGE=${{ matrix.image }}
           tags: |
             ghcr.io/binkhq/${{ github.event.repository.name }}:${{ matrix.python_version_short }}
-      - uses: docker/build-push-action@v4
+      - uses: docker/build-push-action@v5
         with:
           push: true
           target: pipenv
@@ -64,7 +64,7 @@ jobs:
             IMAGE=${{ matrix.image }}
           tags: |
             ghcr.io/binkhq/${{ github.event.repository.name }}:${{ matrix.python_version_short }}-pipenv
-      - uses: docker/build-push-action@v4
+      - uses: docker/build-push-action@v5
         with:
           push: true
           target: poetry
@@ -75,7 +75,7 @@ jobs:
             IMAGE=${{ matrix.image }}
           tags: |
             ghcr.io/binkhq/${{ github.event.repository.name }}:${{ matrix.python_version_short }}-poetry
-      - uses: docker/build-push-action@v4
+      - uses: docker/build-push-action@v5
         with:
           push: true
           target: pyo3

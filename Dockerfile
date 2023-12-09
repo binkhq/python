@@ -2,7 +2,7 @@ ARG IMAGE=debian:12-slim
 FROM docker.io/${IMAGE} AS build
 
 ENV DESTDIR=/tmp/install
-ARG PYTHON_VERSION=3.12.0
+ARG PYTHON_VERSION=3.12.1
 ARG LINKERD_AWAIT_VERSION=0.2.7
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
@@ -56,7 +56,7 @@ RUN pip install --no-cache-dir poetry && \
     rm -rf /var/lib/apt/lists/*
 
 FROM base AS pyo3
-ARG RUST_VERSION=1.72.1
+ARG RUST_VERSION=1.74.0
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
