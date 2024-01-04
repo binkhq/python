@@ -33,43 +33,14 @@ RUN find . -type f | xargs strip --strip-all | true
 RUN wget -O /tmp/install/usr/local/bin/linkerd-await https://github.com/linkerd/linkerd-await/releases/download/release/v${LINKERD_AWAIT_VERSION}/linkerd-await-v${LINKERD_AWAIT_VERSION}-amd64
 RUN chmod +x /tmp/install/usr/local/bin/linkerd-await
 
-FROM docker.io/${IMAGE} AS base
+FROM docker.io/${IMAGE}
 ENV TZ UTC
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         libssl-dev libexpat1 liblzma5 libsqlite3-0 ca-certificates libreadline8 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-RUN useradd --uid 10000 bink
+RUN useradd --uid 10000 apps
 COPY --from=build /tmp/install /
 RUN ldconfig
 CMD ["/usr/local/bin/python"]
-
-FROM base AS pipenv
-RUN pip install --no-cache-dir pipenv
-
-FROM base AS poetry
-RUN pip install --no-cache-dir poetry && \
-    poetry config virtualenvs.create false && \
-    poetry self add poetry-dynamic-versioning[plugin] && \
-    apt-get update && apt-get -y install git && \
-    rm -rf /var/lib/apt/lists/*
-
-FROM base AS pyo3
-ARG RUST_VERSION=1.74.0
-
-ENV RUSTUP_HOME=/usr/local/rustup \
-    CARGO_HOME=/usr/local/cargo \
-    PATH=/usr/local/cargo/bin:$PATH \
-    DEBIAN_FRONTEND="noninteractive"
-
-RUN apt-get update && \
-    apt-get -y install wget gcc libssl-dev pkg-config && \
-    wget "https://static.rust-lang.org/rustup/dist/$(uname -m)-unknown-linux-gnu/rustup-init"; \
-    chmod +x rustup-init && \
-    ./rustup-init -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION && \
-    rm rustup-init && \
-    chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \
-    pip install --no-cache-dir setuptools-rust maturin twine cffi && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*

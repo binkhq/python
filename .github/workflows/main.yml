@@ -14,19 +14,15 @@ jobs:
         include:
           - python_version: "3.12.1"
             python_version_short: "3.12"
-            rust_version: "1.74.0"
             image: debian:12-slim
           - python_version: "3.11.7"
             python_version_short: "3.11"
-            rust_version: "1.74.0"
             image: ubuntu:22.04
           - python_version: "3.10.13"
             python_version_short: "3.10"
-            rust_version: "1.74.0"
             image: ubuntu:22.04
           - python_version: "3.9.18"
             python_version_short: "3.9"
-            rust_version: "1.74.0"
             image: ubuntu:22.04
     name: build
     runs-on: ubuntu-22.04
@@ -45,44 +41,9 @@ jobs:
       - uses: docker/build-push-action@v5
         with:
           push: true
-          target: base
           platforms: linux/amd64, linux/arm64
           build-args: |
             PYTHON_VERSION=${{ matrix.python_version }}
-            RUST_VERSION=${{ matrix.rust_version }}
             IMAGE=${{ matrix.image }}
           tags: |
             ghcr.io/binkhq/${{ github.event.repository.name }}:${{ matrix.python_version_short }}
-      - uses: docker/build-push-action@v5
-        with:
-          push: true
-          target: pipenv
-          platforms: linux/amd64, linux/arm64
-          build-args: |
-            PYTHON_VERSION=${{ matrix.python_version }}
-            RUST_VERSION=${{ matrix.rust_version }}
-            IMAGE=${{ matrix.image }}
-          tags: |
-            ghcr.io/binkhq/${{ github.event.repository.name }}:${{ matrix.python_version_short }}-pipenv
-      - uses: docker/build-push-action@v5
-        with:
-          push: true
-          target: poetry
-          platforms: linux/amd64, linux/arm64
-          build-args: |
-            PYTHON_VERSION=${{ matrix.python_version }}
-            RUST_VERSION=${{ matrix.rust_version }}
-            IMAGE=${{ matrix.image }}
-          tags: |
-            ghcr.io/binkhq/${{ github.event.repository.name }}:${{ matrix.python_version_short }}-poetry
-      - uses: docker/build-push-action@v5
-        with:
-          push: true
-          target: pyo3
-          platforms: linux/amd64, linux/arm64
-          build-args: |
-            PYTHON_VERSION=${{ matrix.python_version }}
-            RUST_VERSION=${{ matrix.rust_version }}
-            IMAGE=${{ matrix.image }}
-          tags: |
-            ghcr.io/binkhq/${{ github.event.repository.name }}:${{ matrix.python_version_short }}-pyo3
