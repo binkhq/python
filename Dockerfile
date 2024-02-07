@@ -2,7 +2,7 @@ ARG IMAGE=debian:12-slim
 FROM docker.io/${IMAGE} AS build
 
 ENV DESTDIR=/tmp/install
-ARG PYTHON_VERSION=3.12.1
+ARG PYTHON_VERSION=3.12.2
 ARG LINKERD_AWAIT_VERSION=0.2.7
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
@@ -17,8 +17,8 @@ RUN tar xzvf python.tgz
 
 WORKDIR /tmp/Python-${PYTHON_VERSION}
 RUN ./configure --enable-optimizations --enable-loadable-sqlite-extensions \
-                --enable-option-checking=fatal --enable-shared \
-                --with-system-expat
+    --enable-option-checking=fatal --enable-shared \
+    --with-system-expat
 RUN make -j "$(nproc)"
 RUN make install
 
@@ -37,7 +37,7 @@ FROM docker.io/${IMAGE}
 ENV TZ UTC
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        libssl-dev libexpat1 liblzma5 libsqlite3-0 ca-certificates libreadline8 && \
+    libssl-dev libexpat1 liblzma5 libsqlite3-0 ca-certificates libreadline8 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 RUN useradd --uid 10000 apps
