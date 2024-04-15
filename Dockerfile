@@ -2,8 +2,7 @@ ARG IMAGE=debian:12-slim
 FROM docker.io/${IMAGE} AS build
 
 ENV DESTDIR=/tmp/install
-ARG PYTHON_VERSION=3.12.2
-ARG LINKERD_AWAIT_VERSION=0.2.7
+ARG PYTHON_VERSION=3.12.3
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get -y install \
     build-essential checkinstall libreadline-dev libncursesw5-dev \
@@ -30,8 +29,6 @@ RUN ln -s python3 python && \
     find /usr/local/ -type f -name '*.pyc' -o -name '*.pyo' -delete
 RUN rm -rfv /tmp/install/usr/local/lib/python3.?/test
 RUN find . -type f | xargs strip --strip-all | true
-RUN wget -O /tmp/install/usr/local/bin/linkerd-await https://github.com/linkerd/linkerd-await/releases/download/release/v${LINKERD_AWAIT_VERSION}/linkerd-await-v${LINKERD_AWAIT_VERSION}-amd64
-RUN chmod +x /tmp/install/usr/local/bin/linkerd-await
 
 FROM docker.io/${IMAGE}
 ENV TZ UTC
