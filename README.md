@@ -6,26 +6,22 @@ Python 3.9, 3.10, 3.11, and 3.12 with additional components for easy deployments
 
 | Tag | Base OS | Python Version | CPU Architectures | Additional Components | EOL Date |
 | --- | ------- | -------------- | ----------------- | --------------------- | -------- |
-| `ghcr.io/binkhq/python:3.9` | [Ubuntu 22.04](https://hub.docker.com/_/ubuntu) | [v3.9.18](https://www.python.org/downloads/release/python-3918/) | `amd64`, `arm64` | [linkerd-await](https://github.com/linkerd/linkerd-await) | April 2025 |
-| `ghcr.io/binkhq/python:3.10` | [Ubuntu 22.04](https://hub.docker.com/_/ubuntu) | [v3.10.13](https://www.python.org/downloads/release/python-31013/) | `amd64`, `arm64` | [linkerd-await](https://github.com/linkerd/linkerd-await) | April 2026 |
-| `ghcr.io/binkhq/python:3.11` | [Ubuntu 22.04](https://hub.docker.com/_/ubuntu) | [v3.11.7](https://www.python.org/downloads/release/python-3117/) | `amd64`, `arm64` | [linkerd-await](https://github.com/linkerd/linkerd-await) | April 2027 |
-| `ghcr.io/binkhq/python:3.12` | [Debian 12](https://hub.docker.com/_/debian) | [v3.12.1](https://www.python.org/downloads/release/python-3121/) | `amd64`, `arm64` | [linkerd-await](https://github.com/linkerd/linkerd-await) | April 2028 |
+| `ghcr.io/binkhq/python:3.9` | [Ubuntu 22.04](https://hub.docker.com/_/ubuntu) | [v3.9.19](https://www.python.org/downloads/release/python-3918/) | `amd64`, `arm64` | None | April 2025 |
+| `ghcr.io/binkhq/python:3.10` | [Ubuntu 22.04](https://hub.docker.com/_/ubuntu) | [v3.10.14](https://www.python.org/downloads/release/python-31013/) | `amd64`, `arm64` | None | April 2026 |
+| `ghcr.io/binkhq/python:3.11` | [Ubuntu 22.04](https://hub.docker.com/_/ubuntu) | [v3.11.9](https://www.python.org/downloads/release/python-3117/) | `amd64`, `arm64` | None | April 2027 |
+| `ghcr.io/binkhq/python:3.12` | [Debian 12](https://hub.docker.com/_/debian) | [v3.12.3](https://www.python.org/downloads/release/python-3121/) | `amd64`, `arm64` | None | April 2028 |
 
 ## Base OS Changes
 
 With Canonical agressively pushing its own products over standard Linux tooling, e.g. Netplan, Snap, we decided to skip our migration to Ubuntu 24.04 and move back to Debian. Debian 12 has everything we need from a feature perspective and will continue to recieve security updates until 2026, at which time we'll move our images to Debian 13.
 
-## Default User
+## Removed Features
 
-This image ships with a user called `apps` with a UID of `10000`, this user has no permissions configured and should be ideal for running workloads as within Kubernetes.
+### Linkerd
 
-## Planned Features
+Bink is no longer using Linkerd following the changes described [here](https://linkerd.io/2024/02/21/announcing-linkerd-2.15/#a-new-model-for-stable-releases) and as such will no longer support `linkerd-await` in this image.
 
-### Distroless Containers
-
-We've been observing [Google's Distroless Containers](https://github.com/GoogleContainerTools/distroless) for some time and are debating if this makes sense for our environments. We may publish `ghcr.io/binkhq/python:3.12-distroless` images for evaluation in future, but these should not be considered stable/supported unless added to the "Feature Matrix" section.
-
-## Removed/Deprecated Features
+### Rust
 
 Previously these images shipped with special tags for [poetry](https://github.com/python-poetry/poetry), [pipenv](https://github.com/pypa/pipenv), and [pyo3](https://github.com/PyO3/pyo3), these have been removed as this project is built around the Python release schedule and often had out of date versions of the aformentioned projects.
 
